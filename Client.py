@@ -1,5 +1,6 @@
 import socket
 import threading
+import json
 import time
 
 
@@ -31,15 +32,27 @@ class Client:
             print('Sended')
 
     def receive(self):
-        try:
-            data = str(self.sock.recv(1024), 'utf-8')
-            print(f'Received: {data}')
-        except Exception as e:
-            print(f'Excepted: {e} || in receive')
+        while True:
+            try:
+                data = str(self.sock.recv(1024), 'utf-8')
+                if data:
+                    print(f'Received: {data}')
+            except Exception as e:
+                print(f'Excepted: {e} || in receive')
+                #self.connect()
+            time.sleep(0)
+
+    def main_def(self):
+        while True:
+            client.send(json.dumps({'name': socket.gethostname(),
+                                    'admin': False, 'command': None,
+                                    'command_number': None}))
+            time.sleep(10)
 
 
 if __name__ == '__main__':
     client = Client('localhost', 27036)
     client.connect()
-    client.send('bnm')
-    client.receive()
+    threading.Thread(target=client.main_def).start()
+    threading.Thread(target=client.receive).start()
+
