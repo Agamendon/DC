@@ -29,7 +29,7 @@ class Client:
         except Exception as e:
             print(f'Excepted: {e} || in send')
         else:
-            print('Sended')
+            print('Sent')
 
     def receive(self):
         while True:
