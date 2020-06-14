@@ -42,7 +42,7 @@ class Client:
                 #self.connect()
             time.sleep(0)
 
-    def main_def(self):
+    def infinity_sender(self):
         while True:
             client.send(json.dumps({'name': socket.gethostname(),
                                     'admin': False, 'command': None,
@@ -53,6 +53,5 @@ class Client:
 if __name__ == '__main__':
     client = Client('localhost', 27036)
     client.connect()
-    threading.Thread(target=client.main_def).start()
+    threading.Thread(target=client.infinity_sender).start()
     threading.Thread(target=client.receive).start()
-
